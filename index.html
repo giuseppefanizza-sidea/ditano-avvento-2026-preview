@@ -39,6 +39,22 @@
   @media(max-width:900px){.grid{grid-template-columns:repeat(4,1fr);}}
   @media(max-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:10px;}}
 
+  /* HERO oggi (mobile) */
+  .hero{display:none;}
+  @media(max-width:560px){
+    .hero{display:block;margin:0 auto 26px;max-width:420px;background:#fff;border:1.5px solid var(--rosso);border-radius:16px;overflow:hidden;box-shadow:0 12px 30px -14px rgba(200,16,46,.5);cursor:pointer;text-align:left;}
+    .hero-media{position:relative;width:100%;aspect-ratio:16/10;background:linear-gradient(155deg,#fff,#f3f3f3);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .hero-flake{width:40%;height:40%;opacity:.12;color:var(--rosso);}
+    .hero-badge{position:absolute;top:12px;left:12px;z-index:2;background:var(--rosso);color:#fff;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:20px;}
+    .hero-body{padding:18px 20px 20px;}
+    .hero-day{text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--rosso);font-weight:600;margin:0 0 6px;}
+    .hero-title{font-family:Georgia,serif;font-size:24px;line-height:1.15;margin:0 0 8px;}
+    .hero-desc{font-size:14px;line-height:1.55;color:#555;margin:0 0 14px;}
+    .hero-open{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--rosso);color:#fff;padding:12px 18px;border-radius:9px;font-size:14px;font-weight:600;border:none;width:100%;}
+    .door.active .front{animation:none;}
+  }
+
   .door{position:relative;aspect-ratio:1/1;perspective:900px;}
   .flip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);}
   .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
@@ -122,6 +138,7 @@
 </div>
 <!-- Board finestrelle su fondo chiaro -->
 <div class="avv">
+  <div class="hero" id="hero" hidden></div>
   <div class="grid" id="grid"></div>
 </div>
 
@@ -166,11 +183,13 @@ var OFFERS={
 };
 function offer(i){ return OFFERS[i]||{t:"Offerta del giorno",d:"Una nuova sorpresa beauty ti aspetta.",c:"REGALO"+i,cta:"Scopri l'offerta"}; }
 
-var modal=document.getElementById('modal'), card=modal.querySelector('.card'), grid=document.getElementById('grid');
+var modal=document.getElementById('modal'), card=modal.querySelector('.card'), grid=document.getElementById('grid'), hero=document.getElementById('hero');
 function render(cur){
   grid.innerHTML='';
+  var activeIdx=null;
   for(var i=1;i<=24;i++){
     var o=offer(i), state=i>cur?'locked':(i===cur?'active':'past');
+    if(state==='active') activeIdx=i;
     var door=document.createElement('div'); door.className='door '+state+((o.img&&state!=='locked')?' has-visual':'');
     var frontInner = (o.img && state!=='locked')
       ? '<img class="door-img" src="'+o.img+'" alt=""><span class="num overlay">'+i+'</span>'
@@ -184,6 +203,20 @@ function render(cur){
     if(state==='active'){ (function(i){door.onclick=function(){open(i,false);};})(i); }
     else if(state==='past'){ (function(i){door.onclick=function(){open(i,true);};})(i); }
     grid.appendChild(door);
+  }
+  // HERO oggi (mobile)
+  if(activeIdx){
+    var ho=offer(activeIdx);
+    var media=ho.img?'<img src="'+ho.img+'" alt="">':'<span class="hero-flake">'+FLAKE+'</span>';
+    hero.innerHTML='<div class="hero-media"><span class="hero-badge">Oggi</span>'+media+'</div>'+
+      '<div class="hero-body"><p class="hero-day">Giorno '+activeIdx+' dicembre</p>'+
+      '<h3 class="hero-title">'+ho.t+'</h3>'+(ho.d?'<p class="hero-desc">'+ho.d+'</p>':'')+
+      '<button class="hero-open" type="button">Scopri l\'offerta di oggi</button></div>';
+    hero.hidden=false;
+    (function(idx){hero.onclick=function(){open(idx,false);};})(activeIdx);
+  } else {
+    hero.innerHTML='<div style="padding:22px;text-align:center;"><p style="font-family:Georgia,serif;font-size:20px;margin:0 0 6px;">Il calendario ti aspetta</p><p style="font-size:13px;color:#666;margin:0;">Dal 1 dicembre, ogni giorno una nuova finestrella da aprire.</p></div>';
+    hero.hidden=false;
   }
 }
 function open(i,expired){
