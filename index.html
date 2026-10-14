@@ -172,16 +172,20 @@ var FLAKE='<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="non
 // placeholder immagine (SVG data-uri) nei toni brand
 function ph(label,bg){return "data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><rect width="300" height="300" fill="'+bg+'"/><text x="50%" y="50%" font-family="Georgia" font-size="22" fill="#fff" text-anchor="middle" dominant-baseline="middle">'+label+'</text></svg>');}
 
+// Prodotti reali presi da ditano.com (immagine CDN Shopify, prezzo, URL prodotto) - solo per la demo
 var OFFERS={
-  1:{t:"Benvenuto Avvento",d:"10% su tutto il catalogo per iniziare dicembre con il piede giusto.",c:"DITANO10",cta:"Scopri il catalogo"},
-  2:{t:"Il profumo giusto",d:"Un best seller selezionato dalla nostra profumeria, in offerta oggi.",c:"PROFUMO2",cta:"Vai al prodotto",img:ph("Profumo","#8c0d20"),pt:"Eau de Parfum Ditano",pp:"49,90 €"},
-  3:{t:"Rituale corpo",d:"La collezione corpo in sconto: idratazione e cura per l'inverno.",c:"CORPO3",cta:"Scopri la collezione",img:ph("Collezione corpo","#AF1452")},
-  5:{t:"Note d'inverno",d:"La selezione profumi uomo, in offerta solo oggi.",c:"NOTE15",cta:"Scopri la selezione"},
-  7:{t:"Il gesto del giorno",d:"15% sulla skincare viso. La cura che la pelle chiede a dicembre.",c:"VISO15",cta:"Scopri il prodotto",img:ph("Siero viso","#C8102E"),pt:"Siero Illuminante Viso",pp:"34,90 €"},
-  12:{t:"Sorpresa di meta Avvento",d:"Un'offerta a sorpresa sul make-up, da scoprire aprendo la finestrella.",c:"META12",cta:"Scopri l'offerta"},
-  24:{t:"Vigilia Ditano",d:"Il regalo piu grande, per chiudere l'Avvento in bellezza.",c:"VIGILIA",cta:"Il regalo di Natale",img:ph("Cofanetto","#8c0d20"),pt:"Cofanetto Natale Ditano",pp:"79,00 €"}
+  1:{t:"Benvenuto Avvento",d:"10% su tutto il catalogo per iniziare dicembre con il piede giusto.",c:"DITANO10",cta:"Scopri il catalogo",u:"https://ditano.com/collections/all"},
+  2:{t:"L'icona DIOR",d:"Sauvage Eau de Parfum: note esperidate e vanigliate. L'icona maschile, in offerta oggi.",c:"SAUVAGE2",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/15597389-119a-401a-a680-a541e28f6e22.jpg",pt:"Sauvage Eau de Parfum - DIOR",pp:"65,78 €",u:"https://ditano.com/products/sauvage-eau-de-parfum"},
+  3:{t:"Il fiore solare",d:"J'adore Eau de Parfum: note floreali e solari. Il profumo femminile per eccellenza.",c:"JADORE3",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/121dff12-46fc-476c-8a60-0b35a7f379ae.jpg",pt:"J'adore Eau de Parfum - DIOR",pp:"63,54 €",u:"https://ditano.com/products/j-adore-eau-de-parfum-new"},
+  5:{t:"Il muschio bianco",d:"Narciso Rodriguez For Her Pure Musc: sensualita pura. Oggi al 39% di sconto.",c:"NARCISO5",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/d48f1ba2-01ec-4c04-94b3-24e3a9343eb1.jpg",pt:"For Her Pure Musc - Narciso Rodriguez",pp:"48,00 €",u:"https://ditano.com/products/narciso-rodriguez-for-her-pure-musc"},
+  7:{t:"Freschezza mediterranea",d:"Acqua di Gioia di Armani: la fragranza dell'acqua. Solo oggi al 34%.",c:"GIOIA7",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/74bff379-38b5-4cda-ad71-c52e39312acb.jpg",pt:"Acqua di Gioia - Armani",pp:"51,99 €",u:"https://ditano.com/products/acqua-di-gioia"},
+  9:{t:"Make-up d'autore",d:"Professionale Matita Occhi Collistar, bestseller make-up. Lo sguardo che definisce il tuo look.",c:"COLLISTAR9",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/1720d00a-0d3f-4641-9ec1-3dc3ab75192f.jpg",pt:"Professionale Matita Occhi - Collistar",pp:"14,40 €",u:"https://ditano.com/products/professionale-matita-occhi"},
+  12:{t:"Sorpresa di meta Avvento",d:"Versace Eros Eau de Parfum: carisma e seduzione. L'offerta a sorpresa di oggi.",c:"EROS12",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/9c12dd67-d011-4614-b87a-f88d524c6839.jpg",pt:"Eros Eau de Parfum - Versace",pp:"63,70 €",u:"https://ditano.com/products/versace-eros-eau-de-parfum"},
+  16:{t:"Pelle che rinasce",d:"Advanced Night Repair di Estee Lauder: il siero notturno iconico, al 30%.",c:"ANR16",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/34b15976-ce52-4e41-a72c-42fa3603f90a.jpg",pt:"Advanced Night Repair - Estee Lauder",pp:"101,00 €",u:"https://ditano.com/products/advanced-night-repair-synchronized-multi-recovery-complex-siero"},
+  20:{t:"Fragranza futura",d:"Alien Eau de Parfum ricaricabile di Mugler: ipnotica e avvolgente, al 30%.",c:"ALIEN20",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/c3cbee1b-262b-4ec9-97d4-817381f3a539.jpg",pt:"Alien EDP Ricaricabile - Mugler",pp:"83,90 €",u:"https://ditano.com/products/alien-edp-ricaricabile"},
+  24:{t:"Vigilia Ditano",d:"Il regalo piu grande per chiudere l'Avvento: Sauvage, l'icona per lui, sotto l'albero.",c:"VIGILIA",cta:"Il regalo di Natale",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/15597389-119a-401a-a680-a541e28f6e22.jpg",pt:"Sauvage Eau de Parfum - DIOR",pp:"65,78 €",u:"https://ditano.com/products/sauvage-eau-de-parfum"}
 };
-function offer(i){ return OFFERS[i]||{t:"Offerta del giorno",d:"Una nuova sorpresa beauty ti aspetta.",c:"REGALO"+i,cta:"Scopri l'offerta"}; }
+function offer(i){ return OFFERS[i]||{t:"Offerta del giorno",d:"Una nuova sorpresa beauty ti aspetta.",c:"REGALO"+i,cta:"Scopri l'offerta",u:"https://ditano.com/collections/all"}; }
 
 var modal=document.getElementById('modal'), card=modal.querySelector('.card'), grid=document.getElementById('grid'), hero=document.getElementById('hero');
 function render(cur){
@@ -231,7 +235,7 @@ function open(i,expired){
   var codeBox=card.querySelector('.code');
   if(o.c&&!expired){ card.querySelector('.cval').textContent=o.c; codeBox.hidden=false; } else { codeBox.hidden=true; }
   var cta=card.querySelector('.cta');
-  if(!expired){ cta.textContent=o.cta; cta.hidden=false; } else { cta.hidden=true; }
+  if(!expired){ cta.textContent=o.cta; cta.href=o.u||'#'; cta.target='_blank'; cta.rel='noopener'; cta.hidden=false; } else { cta.hidden=true; }
   card.querySelector('.exp').hidden=!expired;
   modal.classList.add('open');
 }
