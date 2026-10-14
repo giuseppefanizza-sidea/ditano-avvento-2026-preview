@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anteprima - Calendario Avvento Ditano 2026</title>
+<style>
+  :root{
+    --rosso:#C8102E; --magenta:#AF1452; --rosso-sc:#9d0c24; --oro:#C9A24B;
+    --nero:#1d1d1d; --grigio-bg:#F4F4F4; --grigio-ln:#e6e6e6; --bianco:#fff; --spento:#efeef0;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--nero);background:#fff;}
+
+  /* --- finto contesto pagina Ditano/Naima (solo per l'anteprima) --- */
+  .ctx-topbar{background:#f7f7f7;border-bottom:1px solid #eee;font-size:12px;color:#555;padding:6px 20px;text-align:center;}
+  .ctx-nav{background:#fff;border-bottom:1px solid #eee;padding:12px 20px;display:flex;align-items:center;gap:16px;}
+  .ctx-logo{font-family:Georgia,serif;font-size:26px;letter-spacing:.02em;}
+  .ctx-logo small{display:block;font-size:9px;letter-spacing:.08em;color:#888;font-family:system-ui;}
+  .ctx-promo{background:var(--rosso);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;}
+
+  /* --- fascia rossa + intro (header sezione, come pagina reale) --- */
+  .avv-banner{background:linear-gradient(100deg,#8c0d20 0%,#C8102E 55%,#b3123f 100%);color:#fff;text-align:center;padding:clamp(34px,6vw,64px) 20px;}
+  .avv-banner-title{font-family:Georgia,serif;font-size:clamp(30px,6vw,56px);line-height:1.08;margin:0;font-weight:500;}
+  .avv-banner-sub{margin:12px 0 0;font-size:clamp(11px,1.6vw,15px);letter-spacing:.22em;text-transform:uppercase;opacity:.92;}
+  .avv-intro{background:#fff;text-align:center;padding:clamp(36px,5vw,60px) 20px clamp(10px,2vw,20px);}
+  .avv-intro-title{font-family:Georgia,serif;font-size:clamp(26px,4.5vw,42px);line-height:1.14;margin:0 auto 14px;font-weight:500;max-width:860px;}
+  .avv-intro-sub{font-size:clamp(14px,2vw,17px);line-height:1.65;color:#666;margin:0 auto;max-width:640px;}
+
+  /* --- SEZIONE CALENDARIO (board) --- */
+  .avv{position:relative;background:var(--grigio-bg);padding:clamp(32px,5vw,64px) clamp(16px,4vw,56px) clamp(44px,7vw,80px);overflow:hidden;}
+  .avv>*{position:relative;z-index:1;}
+  .head{text-align:center;max-width:720px;margin:0 auto clamp(34px,6vw,52px);}
+  .eyebrow{text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--rosso);margin:0 0 14px;font-weight:600;}
+  .title{font-family:Georgia,serif;font-size:clamp(28px,5vw,46px);line-height:1.12;margin:0 0 14px;font-weight:500;}
+  .sub{font-size:clamp(14px,2vw,17px);line-height:1.65;color:#555;margin:0;}
+
+  .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.5vw,16px);max-width:1120px;margin:0 auto;}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(4,1fr);}}
+  @media(max-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:10px;}}
+
+  .door{position:relative;aspect-ratio:1/1;perspective:900px;}
+  .flip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .front{background:#fff;border:1px solid var(--grigio-ln);box-shadow:0 6px 18px -10px rgba(0,0,0,.18);}
+  .back{transform:rotateY(180deg);background:var(--spento);border:1px dashed #cfcdd2;color:var(--nero);padding:9px;text-align:center;flex-direction:column;gap:5px;}
+  .flake{position:absolute;width:54%;height:54%;opacity:.06;color:var(--rosso);}
+  .door-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .num.overlay{position:absolute;top:6px;left:9px;z-index:3;color:#fff;font-size:clamp(18px,2.6vw,28px);text-shadow:0 1px 4px rgba(0,0,0,.5);}
+  .door.has-visual .front::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 45%);z-index:2;pointer-events:none;}
+  .num{position:relative;z-index:2;font-family:Georgia,serif;font-size:clamp(24px,3.6vw,42px);font-weight:500;color:var(--nero);}
+
+  .door.locked .num{opacity:.7;}
+
+  .door.active{cursor:pointer;}
+  .door.active .front{border-color:var(--rosso);box-shadow:0 10px 28px -10px rgba(200,16,46,.5),inset 0 0 0 3px rgba(201,162,75,.35);animation:glow 2.6s ease-in-out infinite;}
+  .door.active .flake{opacity:.14;}
+  .door.active .num{color:var(--rosso);}
+  .door.active:hover .flip{transform:translateY(-4px) rotateX(6deg);}
+  .seal{position:absolute;top:8px;right:9px;width:15px;height:15px;z-index:3;opacity:.8;color:var(--rosso);}
+  .today{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:3;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--rosso);font-weight:700;}
+  @keyframes glow{0%,100%{box-shadow:0 8px 22px -10px rgba(200,16,46,.4),inset 0 0 0 3px rgba(201,162,75,.3);}50%{box-shadow:0 12px 30px -8px rgba(200,16,46,.65),inset 0 0 0 3px rgba(201,162,75,.6);}}
+  @media(prefers-reduced-motion:reduce){.door.active .front{animation:none;}.flip{transition:none;}}
+
+  .door.past{cursor:pointer;}
+  .door.past .flip{transform:rotateY(180deg);}
+  .pnum{font-family:Georgia,serif;font-size:clamp(15px,2.2vw,22px);opacity:.55;line-height:1;}
+  .ptxt{font-size:clamp(8px,1.3vw,10px);line-height:1.25;opacity:.7;max-width:96%;}
+  .ptag{font-size:7.5px;text-transform:uppercase;letter-spacing:.13em;opacity:.5;}
+
+  .modal{position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(29,29,29,.55);backdrop-filter:blur(4px);}
+  .modal.open{display:flex;}
+  .card{background:#fff;border-radius:16px;max-width:440px;width:100%;padding:36px;text-align:center;position:relative;box-shadow:0 40px 90px -24px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto;border-top:3px solid var(--rosso);transform:scale(.94);opacity:0;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .35s;}
+  .modal.open .card{transform:scale(1);opacity:1;}
+  .card-flake{width:34px;height:34px;margin:0 auto 14px;color:var(--rosso);opacity:.85;}
+  .close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:26px;cursor:pointer;opacity:.5;}
+  .close:hover{opacity:1;}
+  .cday{text-transform:uppercase;letter-spacing:.24em;font-size:11px;color:var(--rosso);font-weight:600;margin:0 0 10px;}
+  .ctitle{font-family:Georgia,serif;font-size:clamp(23px,4vw,30px);margin:0 0 12px;line-height:1.14;}
+  .cprod{font-size:14px;color:#444;margin:0 0 18px;}
+  .cprod b{color:var(--rosso);font-weight:600;}
+  .cdesc{font-size:15px;line-height:1.62;color:#555;margin:0 0 24px;}
+  .code{border:1.5px dashed var(--rosso);border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 18px;background:rgba(200,16,46,.04);}
+  .clab{font-size:9.5px;text-transform:uppercase;letter-spacing:.14em;color:#888;display:block;margin-bottom:2px;text-align:left;}
+  .cval{font-family:Georgia,serif;font-size:23px;font-weight:600;letter-spacing:.07em;color:var(--rosso);}
+  .cbtn{border:none;background:var(--rosso);color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s;}
+  .cbtn:hover{background:var(--rosso-sc);}
+  .cbtn.copied{background:#2e7d32;}
+  .cta{display:inline-block;width:100%;background:var(--rosso);color:#fff;text-decoration:none;padding:15px;border-radius:10px;font-weight:600;font-size:15px;transition:transform .2s,background .2s;}
+  .cta:hover{background:var(--rosso-sc);transform:translateY(-1px);}
+  .exp{display:inline-block;margin-top:14px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#999;}
+
+  /* L'attributo HTML [hidden] deve sempre vincere sui display locali */
+  [hidden]{display:none !important;}
+
+  .devbar{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:var(--nero);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;font-size:13px;}
+  .devbar input{width:60px;padding:5px 8px;border-radius:6px;border:none;font-size:14px;text-align:center;}
+  .devbar button{background:var(--rosso);color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:600;}
+  .devbar span{opacity:.6;}
+</style>
+</head>
+<body>
+
+<!-- Finto contesto nav della pagina reale (solo per l'anteprima) -->
+<div class="ctx-topbar">Consegna entro 2/3 giorni &nbsp;·&nbsp; Un brand del gruppo Naïma</div>
+<div class="ctx-nav">
+  <div class="ctx-logo">Ditano<small>La profumeria della bellezza dal 1959</small></div>
+  <span class="ctx-promo">Promo</span>
+  <span style="font-size:13px;color:#555;">Novità · Calendari dell'Avvento · Profumi · Make-Up · Trattamenti</span>
+</div>
+
+<!-- ===== LA SEZIONE CALENDARIO (quella da integrare nel tema) ===== -->
+<!-- Fascia rossa, come header pagina Avvento -->
+<div class="avv-banner">
+  <h1 class="avv-banner-title">Il Calendario dell'Avvento Ditano</h1>
+  <p class="avv-banner-sub">Ogni giorno una nuova sorpresa beauty</p>
+</div>
+<!-- Intro su bianco -->
+<div class="avv-intro">
+  <h2 class="avv-intro-title">Dietro ogni finestrella, un'offerta che ti aspetta</h2>
+  <p class="avv-intro-sub">Scopri il calendario dell'avvento 2026 e immergiti in un mondo magico: ogni giorno fino a Natale si apre una nuova offerta, da scoprire a mezzanotte.</p>
+</div>
+<!-- Board finestrelle su fondo chiaro -->
+<div class="avv">
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true">
+  <div class="card">
+    <button class="close" aria-label="Chiudi">&times;</button>
+    <span class="card-flake"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1M12 5l-2 2M12 5l2 2M12 19l-2-2M12 19l2-2M5 12l2-2M5 12l2 2M19 12l-2-2M19 12l-2 2"/></svg></span>
+    <p class="cday"></p>
+    <img class="card-img" alt="" hidden style="width:100%;border-radius:12px;margin:0 0 18px;">
+    <h3 class="ctitle"></h3>
+    <p class="cprod" hidden></p>
+    <p class="cdesc"></p>
+    <div class="code" hidden>
+      <span><span class="clab">Il tuo codice</span><span class="cval"></span></span>
+      <button class="cbtn" type="button">Copia</button>
+    </div>
+    <a class="cta" href="#"></a>
+    <span class="exp" hidden>Offerta scaduta</span>
+  </div>
+</div>
+
+<div class="devbar">
+  <label>Simula giorno:</label>
+  <input id="dayInput" type="number" min="1" max="24" value="7">
+  <button id="dayGo">Vai</button>
+  <span>(solo anteprima - in produzione la data e automatica, mezzanotte Italia)</span>
+</div>
+
+<script>
+var FLAKE='<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1M12 5l-2 2M12 5l2 2M12 19l-2-2M12 19l2-2M5 12l2-2M5 12l2 2M19 12l-2-2M19 12l-2 2"/></svg>';
+// placeholder immagine (SVG data-uri) nei toni brand
+function ph(label,bg){return "data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><rect width="300" height="300" fill="'+bg+'"/><text x="50%" y="50%" font-family="Georgia" font-size="22" fill="#fff" text-anchor="middle" dominant-baseline="middle">'+label+'</text></svg>');}
+
+var OFFERS={
+  1:{t:"Benvenuto Avvento",d:"10% su tutto il catalogo per iniziare dicembre con il piede giusto.",c:"DITANO10",cta:"Scopri il catalogo"},
+  2:{t:"Il profumo giusto",d:"Un best seller selezionato dalla nostra profumeria, in offerta oggi.",c:"PROFUMO2",cta:"Vai al prodotto",img:ph("Profumo","#8c0d20"),pt:"Eau de Parfum Ditano",pp:"49,90 €"},
+  3:{t:"Rituale corpo",d:"La collezione corpo in sconto: idratazione e cura per l'inverno.",c:"CORPO3",cta:"Scopri la collezione",img:ph("Collezione corpo","#AF1452")},
+  5:{t:"Note d'inverno",d:"La selezione profumi uomo, in offerta solo oggi.",c:"NOTE15",cta:"Scopri la selezione"},
+  7:{t:"Il gesto del giorno",d:"15% sulla skincare viso. La cura che la pelle chiede a dicembre.",c:"VISO15",cta:"Scopri il prodotto",img:ph("Siero viso","#C8102E"),pt:"Siero Illuminante Viso",pp:"34,90 €"},
+  12:{t:"Sorpresa di meta Avvento",d:"Un'offerta a sorpresa sul make-up, da scoprire aprendo la finestrella.",c:"META12",cta:"Scopri l'offerta"},
+  24:{t:"Vigilia Ditano",d:"Il regalo piu grande, per chiudere l'Avvento in bellezza.",c:"VIGILIA",cta:"Il regalo di Natale",img:ph("Cofanetto","#8c0d20"),pt:"Cofanetto Natale Ditano",pp:"79,00 €"}
+};
+function offer(i){ return OFFERS[i]||{t:"Offerta del giorno",d:"Una nuova sorpresa beauty ti aspetta.",c:"REGALO"+i,cta:"Scopri l'offerta"}; }
+
+var modal=document.getElementById('modal'), card=modal.querySelector('.card'), grid=document.getElementById('grid');
+function render(cur){
+  grid.innerHTML='';
+  for(var i=1;i<=24;i++){
+    var o=offer(i), state=i>cur?'locked':(i===cur?'active':'past');
+    var door=document.createElement('div'); door.className='door '+state+((o.img&&state!=='locked')?' has-visual':'');
+    var frontInner = (o.img && state!=='locked')
+      ? '<img class="door-img" src="'+o.img+'" alt=""><span class="num overlay">'+i+'</span>'
+      : '<span class="flake">'+FLAKE+'</span><span class="num">'+i+'</span>';
+    door.innerHTML=
+      '<div class="flip">'+
+        '<div class="face front">'+frontInner+
+          (state==='active'?'<span class="seal">'+FLAKE+'</span><span class="today">Oggi</span>':'')+'</div>'+
+        '<div class="face back"><span class="pnum">'+i+'</span><span class="ptxt">'+o.t+'</span><span class="ptag">scaduta</span></div>'+
+      '</div>';
+    if(state==='active'){ (function(i){door.onclick=function(){open(i,false);};})(i); }
+    else if(state==='past'){ (function(i){door.onclick=function(){open(i,true);};})(i); }
+    grid.appendChild(door);
+  }
+}
+function open(i,expired){
+  var o=offer(i);
+  card.querySelector('.cday').textContent='Giorno '+i+' dicembre';
+  card.querySelector('.ctitle').textContent=o.t;
+  var prodEl=card.querySelector('.cprod');
+  if(o.pt){ prodEl.innerHTML=o.pt+(o.pp?' &middot; <b>'+o.pp+'</b>':''); prodEl.hidden=false; } else { prodEl.hidden=true; }
+  var imgEl=card.querySelector('.card-img');
+  if(o.img){ imgEl.src=o.img; imgEl.hidden=false; } else { imgEl.hidden=true; }
+  card.querySelector('.cdesc').textContent=o.d;
+  var codeBox=card.querySelector('.code');
+  if(o.c&&!expired){ card.querySelector('.cval').textContent=o.c; codeBox.hidden=false; } else { codeBox.hidden=true; }
+  var cta=card.querySelector('.cta');
+  if(!expired){ cta.textContent=o.cta; cta.hidden=false; } else { cta.hidden=true; }
+  card.querySelector('.exp').hidden=!expired;
+  modal.classList.add('open');
+}
+function close(){ modal.classList.remove('open'); }
+modal.querySelector('.close').addEventListener('click',close);
+modal.addEventListener('click',function(e){ if(e.target===modal) close(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+var copyBtn=modal.querySelector('.cbtn');
+copyBtn.addEventListener('click',function(){
+  var v=card.querySelector('.cval').textContent;
+  navigator.clipboard.writeText(v).then(function(){ copyBtn.textContent='Copiato'; copyBtn.classList.add('copied'); setTimeout(function(){copyBtn.textContent='Copia';copyBtn.classList.remove('copied');},1600); });
+});
+document.getElementById('dayGo').addEventListener('click',function(){ var v=parseInt(document.getElementById('dayInput').value,10)||1; render(Math.max(1,Math.min(24,v))); });
+render(7);
+</script>
+</body>
+</html>
