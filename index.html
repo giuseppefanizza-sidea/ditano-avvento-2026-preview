@@ -3,152 +3,226 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Anteprima - Calendario Avvento Ditano 2026</title>
+<title>Calendario dell'Avvento Ditano 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --rosso:#C8102E; --magenta:#AF1452; --rosso-sc:#9d0c24; --oro:#C9A24B;
-    --nero:#1d1d1d; --grigio-bg:#F4F4F4; --grigio-ln:#e6e6e6; --bianco:#fff; --spento:#efeef0;
+    /* Palette notturna premium - bordeaux profondo + oro */
+    --ink:#1a0710;            /* nero bordeaux fondo */
+    --ink-2:#2a0b17;          /* bordeaux scuro */
+    --wine:#6e0f2a;           /* vino */
+    --rosso:#C8102E;          /* rosso Natale Ditano/Naima (accento vivo) */
+    --rosso-soft:#e24d63;
+    --oro:#D9B36A;            /* oro caldo */
+    --oro-2:#F0D9A8;          /* oro chiaro / champagne */
+    --panna:#FBF4EA;          /* panna (testo su scuro) */
+    --panna-2:#E9DFD0;        /* panna attenuata */
+    --linea:rgba(217,179,106,.22);
+    --serif:"Playfair Display",Georgia,serif;
+    --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   }
   *{box-sizing:border-box;}
-  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--nero);background:#fff;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--sans);color:var(--panna);background:var(--ink);-webkit-font-smoothing:antialiased;}
 
-  /* --- finto contesto pagina Ditano/Naima (solo per l'anteprima) --- */
-  .ctx-topbar{background:#f7f7f7;border-bottom:1px solid #eee;font-size:12px;color:#555;padding:6px 20px;text-align:center;}
-  .ctx-nav{background:#fff;border-bottom:1px solid #eee;padding:12px 20px;display:flex;align-items:center;gap:16px;}
-  .ctx-logo{font-family:Georgia,serif;font-size:26px;letter-spacing:.02em;}
-  .ctx-logo small{display:block;font-size:9px;letter-spacing:.08em;color:#888;font-family:system-ui;}
-  .ctx-promo{background:var(--rosso);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.05em;}
+  /* ---------- finto contesto nav (solo anteprima) ---------- */
+  .ctx-topbar{background:#120409;border-bottom:1px solid rgba(217,179,106,.14);font-size:12px;color:var(--panna-2);padding:7px 20px;text-align:center;letter-spacing:.04em;}
+  .ctx-nav{background:#15050b;border-bottom:1px solid rgba(217,179,106,.14);padding:14px 22px;display:flex;align-items:center;gap:18px;}
+  .ctx-logo{font-family:var(--serif);font-size:26px;letter-spacing:.02em;color:var(--panna);}
+  .ctx-logo small{display:block;font-size:9px;letter-spacing:.14em;color:var(--oro);font-family:var(--sans);text-transform:uppercase;margin-top:2px;}
+  .ctx-links{font-size:13px;color:var(--panna-2);margin-left:auto;}
 
-  /* --- fascia rossa + intro (header sezione, come pagina reale) --- */
-  .avv-banner{background:linear-gradient(100deg,#8c0d20 0%,#C8102E 55%,#b3123f 100%);color:#fff;text-align:center;padding:clamp(34px,6vw,64px) 20px;}
-  .avv-banner-title{font-family:Georgia,serif;font-size:clamp(30px,6vw,56px);line-height:1.08;margin:0;font-weight:500;}
-  .avv-banner-sub{margin:12px 0 0;font-size:clamp(11px,1.6vw,15px);letter-spacing:.22em;text-transform:uppercase;opacity:.92;}
-  .avv-intro{background:#fff;text-align:center;padding:clamp(36px,5vw,60px) 20px clamp(10px,2vw,20px);}
-  .avv-intro-title{font-family:Georgia,serif;font-size:clamp(26px,4.5vw,42px);line-height:1.14;margin:0 auto 14px;font-weight:500;max-width:860px;}
-  .avv-intro-sub{font-size:clamp(14px,2vw,17px);line-height:1.65;color:#666;margin:0 auto;max-width:640px;}
+  /* ---------- SCENA (header + board, tutto su fondo scuro) ---------- */
+  .scene{position:relative;overflow:hidden;background:
+      radial-gradient(130% 80% at 50% -10%, #3a0f20 0%, var(--ink-2) 42%, var(--ink) 100%);}
+  /* bagliore caldo in alto */
+  .scene::before{content:"";position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:120%;height:70%;
+      background:radial-gradient(closest-side, rgba(217,179,106,.18), transparent 70%);pointer-events:none;}
+  /* texture a puntini dorati sottilissima */
+  .scene::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+      background-image:radial-gradient(rgba(217,179,106,.10) 1px, transparent 1.4px);background-size:26px 26px;}
+  .scene>*{position:relative;z-index:2;}
 
-  /* --- SEZIONE CALENDARIO (board) --- */
-  .avv{position:relative;background:var(--grigio-bg);padding:clamp(32px,5vw,64px) clamp(16px,4vw,56px) clamp(44px,7vw,80px);overflow:hidden;}
-  .avv>*{position:relative;z-index:1;}
-  .head{text-align:center;max-width:720px;margin:0 auto clamp(34px,6vw,52px);}
-  .eyebrow{text-transform:uppercase;letter-spacing:.26em;font-size:11px;color:var(--rosso);margin:0 0 14px;font-weight:600;}
-  .title{font-family:Georgia,serif;font-size:clamp(28px,5vw,46px);line-height:1.12;margin:0 0 14px;font-weight:500;}
-  .sub{font-size:clamp(14px,2vw,17px);line-height:1.65;color:#555;margin:0;}
+  /* neve */
+  .snow{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .snow i{position:absolute;top:-10px;color:#fff;opacity:.55;animation:fall linear infinite;}
+  @keyframes fall{0%{transform:translateY(-10px) translateX(0) rotate(0);opacity:0;}
+    10%{opacity:.6;}90%{opacity:.5;}100%{transform:translateY(102vh) translateX(28px) rotate(180deg);opacity:0;}}
 
-  .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.5vw,16px);max-width:1120px;margin:0 auto;}
+  /* ---------- header editoriale ---------- */
+  .head{max-width:900px;margin:0 auto;text-align:center;padding:clamp(44px,8vw,96px) 22px clamp(18px,3vw,28px);}
+  .eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--sans);text-transform:uppercase;
+      letter-spacing:.42em;font-size:11px;color:var(--oro);font-weight:600;margin:0 0 22px;}
+  .eyebrow::before,.eyebrow::after{content:"";width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--oro));}
+  .eyebrow::after{background:linear-gradient(90deg,var(--oro),transparent);}
+  .h1{font-family:var(--serif);font-weight:500;font-size:clamp(38px,8vw,88px);line-height:1.02;margin:0;color:var(--panna);
+      letter-spacing:-.01em;}
+  .h1 em{font-style:italic;color:var(--oro-2);}
+  .lede{font-size:clamp(15px,2vw,19px);line-height:1.7;color:var(--panna-2);max-width:620px;margin:22px auto 0;font-weight:300;}
+  .rule{width:50px;height:1px;background:var(--oro);margin:26px auto 0;opacity:.7;}
+
+  /* ---------- board ---------- */
+  .board{max-width:1180px;margin:0 auto;padding:clamp(26px,4vw,48px) clamp(14px,3vw,40px) clamp(60px,9vw,110px);}
+  .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.4vw,18px);}
   @media(max-width:900px){.grid{grid-template-columns:repeat(4,1fr);}}
   @media(max-width:560px){.grid{grid-template-columns:repeat(3,1fr);gap:10px;}}
 
-  /* HERO oggi (mobile) */
-  .hero{display:none;}
-  @media(max-width:560px){
-    .hero{display:block;margin:0 auto 26px;max-width:420px;background:#fff;border:1.5px solid var(--rosso);border-radius:16px;overflow:hidden;box-shadow:0 12px 30px -14px rgba(200,16,46,.5);cursor:pointer;text-align:left;}
-    .hero-media{position:relative;width:100%;aspect-ratio:16/10;background:linear-gradient(155deg,#fff,#f3f3f3);display:flex;align-items:center;justify-content:center;overflow:hidden;}
-    .hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-    .hero-flake{width:40%;height:40%;opacity:.12;color:var(--rosso);}
-    .hero-badge{position:absolute;top:12px;left:12px;z-index:2;background:var(--rosso);color:#fff;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:20px;}
-    .hero-body{padding:18px 20px 20px;}
-    .hero-day{text-transform:uppercase;letter-spacing:.22em;font-size:10px;color:var(--rosso);font-weight:600;margin:0 0 6px;}
-    .hero-title{font-family:Georgia,serif;font-size:24px;line-height:1.15;margin:0 0 8px;}
-    .hero-desc{font-size:14px;line-height:1.55;color:#555;margin:0 0 14px;}
-    .hero-open{display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--rosso);color:#fff;padding:12px 18px;border-radius:9px;font-size:14px;font-weight:600;border:none;width:100%;}
-    .door.active .front{animation:none;}
-  }
+  /* tessera */
+  .door{position:relative;aspect-ratio:1/1;perspective:1100px;}
+  .flip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.2,.75,.2,1);}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 
-  .door{position:relative;aspect-ratio:1/1;perspective:900px;}
-  .flip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1);}
-  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-  .front{background:#fff;border:1px solid var(--grigio-ln);box-shadow:0 6px 18px -10px rgba(0,0,0,.18);}
-  .back{transform:rotateY(180deg);background:var(--spento);border:1px dashed #cfcdd2;color:var(--nero);padding:9px;text-align:center;flex-direction:column;gap:5px;}
-  .flake{position:absolute;width:54%;height:54%;opacity:.06;color:var(--rosso);}
-  .door-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-  .num.overlay{position:absolute;top:6px;left:9px;z-index:3;color:#fff;font-size:clamp(18px,2.6vw,28px);text-shadow:0 1px 4px rgba(0,0,0,.5);}
-  .door.has-visual .front::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 45%);z-index:2;pointer-events:none;}
-  .num{position:relative;z-index:2;font-family:Georgia,serif;font-size:clamp(24px,3.6vw,42px);font-weight:500;color:var(--nero);}
+  /* fronte chiuso: pannello scuro con cornice oro e numero serif */
+  .front{background:
+      linear-gradient(158deg, rgba(255,255,255,.06), rgba(255,255,255,0) 40%),
+      linear-gradient(158deg, #330f1e 0%, #230a14 100%);
+      border:1px solid var(--linea);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.07), 0 14px 30px -18px rgba(0,0,0,.7);}
+  .front::before{content:"";position:absolute;inset:7px;border:1px solid rgba(217,179,106,.16);border-radius:11px;pointer-events:none;}
+  .num{position:relative;z-index:2;font-family:var(--serif);font-size:clamp(26px,4vw,46px);font-weight:500;color:var(--oro-2);
+      text-shadow:0 1px 10px rgba(217,179,106,.25);}
+  .flake{position:absolute;width:58%;height:58%;opacity:.07;color:var(--oro);z-index:1;}
+  .door-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
+  .num.overlay{position:absolute;top:8px;left:12px;z-index:3;color:#fff;font-size:clamp(18px,2.6vw,30px);text-shadow:0 2px 8px rgba(0,0,0,.7);}
+  .door.has-visual .front::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+      background:linear-gradient(180deg,rgba(26,7,16,.15) 0%,rgba(26,7,16,0) 40%,rgba(26,7,16,.55) 100%);}
 
-  .door.locked .num{opacity:.7;}
+  .door.locked .num{opacity:.72;}
+  .door.locked .front{filter:saturate(.8);}
 
-  .door.active{cursor:pointer;}
-  .door.active .front{border-color:var(--rosso);box-shadow:0 10px 28px -10px rgba(200,16,46,.5),inset 0 0 0 3px rgba(201,162,75,.35);animation:glow 2.6s ease-in-out infinite;}
-  .door.active .flake{opacity:.14;}
-  .door.active .num{color:var(--rosso);}
-  .door.active:hover .flip{transform:translateY(-4px) rotateX(6deg);}
-  .seal{position:absolute;top:8px;right:9px;width:15px;height:15px;z-index:3;opacity:.8;color:var(--rosso);}
-  .today{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:3;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--rosso);font-weight:700;}
-  @keyframes glow{0%,100%{box-shadow:0 8px 22px -10px rgba(200,16,46,.4),inset 0 0 0 3px rgba(201,162,75,.3);}50%{box-shadow:0 12px 30px -8px rgba(200,16,46,.65),inset 0 0 0 3px rgba(201,162,75,.6);}}
-  @media(prefers-reduced-motion:reduce){.door.active .front{animation:none;}.flip{transition:none;}}
+  /* attiva: corona oro, bagliore, numero rosso champagne */
+  .door.active{cursor:pointer;z-index:5;}
+  .door.active .front{border-color:var(--oro);
+      box-shadow:0 0 0 1px var(--oro), 0 18px 40px -14px rgba(200,16,46,.6), inset 0 0 26px rgba(217,179,106,.14);
+      animation:breathe 3s ease-in-out infinite;}
+  .door.active .front::before{border-color:rgba(240,217,168,.5);inset:6px;}
+  .door.active .num{color:var(--oro-2);}
+  .door.active .flake{opacity:.16;}
+  .door.active:hover .flip{transform:translateY(-6px) rotateX(7deg);}
+  .seal{position:absolute;top:9px;right:11px;width:16px;height:16px;z-index:3;color:var(--oro);opacity:.95;}
+  .today{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--sans);
+      font-size:8.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--oro-2);font-weight:600;}
+  @keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(217,179,106,.7),0 14px 34px -16px rgba(200,16,46,.45),inset 0 0 20px rgba(217,179,106,.10);}
+    50%{box-shadow:0 0 0 1px var(--oro),0 22px 46px -12px rgba(200,16,46,.7),inset 0 0 30px rgba(217,179,106,.2);}}
 
+  /* passata: anta girata, retro elegante scuro */
   .door.past{cursor:pointer;}
   .door.past .flip{transform:rotateY(180deg);}
-  .pnum{font-family:Georgia,serif;font-size:clamp(15px,2.2vw,22px);opacity:.55;line-height:1;}
-  .ptxt{font-size:clamp(8px,1.3vw,10px);line-height:1.25;opacity:.7;max-width:96%;}
-  .ptag{font-size:7.5px;text-transform:uppercase;letter-spacing:.13em;opacity:.5;}
+  .back{transform:rotateY(180deg);flex-direction:column;gap:6px;padding:10px;text-align:center;
+      background:linear-gradient(158deg,#241019,#190a11);border:1px solid rgba(217,179,106,.14);}
+  .back::before{content:"";position:absolute;inset:7px;border:1px dashed rgba(217,179,106,.2);border-radius:11px;}
+  .pnum{font-family:var(--serif);font-size:clamp(16px,2.3vw,24px);color:var(--oro);opacity:.75;line-height:1;z-index:2;}
+  .ptxt{font-size:clamp(8.5px,1.3vw,10.5px);line-height:1.3;color:var(--panna-2);opacity:.85;max-width:94%;z-index:2;}
+  .ptag{font-size:7.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--oro);opacity:.6;z-index:2;}
+  .pcheck{position:absolute;top:8px;right:10px;width:13px;height:13px;color:var(--oro);opacity:.6;z-index:2;}
 
-  .modal{position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(29,29,29,.55);backdrop-filter:blur(4px);}
+  @media(prefers-reduced-motion:reduce){
+    .door.active .front{animation:none;}.flip{transition:none;}.snow{display:none;}
+  }
+
+  /* ---------- HERO di oggi (mobile) ---------- */
+  .hero{display:none;}
+  @media(max-width:560px){
+    .door.active .front{animation:none;}
+    .hero{display:block;margin:0 0 26px;border-radius:20px;overflow:hidden;cursor:pointer;
+        background:linear-gradient(158deg,#330f1e,#210a13);border:1px solid var(--oro);
+        box-shadow:0 20px 50px -22px rgba(200,16,46,.6);}
+    .hero-media{position:relative;width:100%;aspect-ratio:16/11;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#2a0b14;}
+    .hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,7,16,0) 40%,rgba(26,7,16,.75));}
+    .hero-flake{width:38%;height:38%;opacity:.14;color:var(--oro);}
+    .hero-badge{position:absolute;top:14px;left:14px;z-index:3;background:var(--oro);color:#2a0b14;font-size:10.5px;font-weight:700;
+        letter-spacing:.2em;text-transform:uppercase;padding:6px 13px;border-radius:30px;}
+    .hero-body{padding:20px 22px 22px;position:relative;z-index:3;margin-top:-54px;}
+    .hero-day{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--oro-2);font-weight:600;margin:0 0 7px;}
+    .hero-title{font-family:var(--serif);font-size:27px;line-height:1.12;margin:0 0 9px;color:var(--panna);}
+    .hero-desc{font-size:14px;line-height:1.6;color:var(--panna-2);margin:0 0 16px;font-weight:300;}
+    .hero-open{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;
+        background:linear-gradient(100deg,var(--rosso),#a60d26);color:#fff;padding:14px;border-radius:12px;font-size:14px;font-weight:600;font-family:var(--sans);}
+    .head{padding-top:clamp(36px,10vw,56px);}
+  }
+
+  /* ---------- modale ---------- */
+  .modal{position:fixed;inset:0;z-index:999;display:none;align-items:center;justify-content:center;padding:20px;
+      background:rgba(14,3,8,.72);backdrop-filter:blur(7px);}
   .modal.open{display:flex;}
-  .card{background:#fff;border-radius:16px;max-width:440px;width:100%;padding:36px;text-align:center;position:relative;box-shadow:0 40px 90px -24px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto;border-top:3px solid var(--rosso);transform:scale(.94);opacity:0;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .35s;}
-  .modal.open .card{transform:scale(1);opacity:1;}
-  .card-flake{width:34px;height:34px;margin:0 auto 14px;color:var(--rosso);opacity:.85;}
-  .close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:26px;cursor:pointer;opacity:.5;}
-  .close:hover{opacity:1;}
-  .cday{text-transform:uppercase;letter-spacing:.24em;font-size:11px;color:var(--rosso);font-weight:600;margin:0 0 10px;}
-  .ctitle{font-family:Georgia,serif;font-size:clamp(23px,4vw,30px);margin:0 0 12px;line-height:1.14;}
-  .cprod{font-size:14px;color:#444;margin:0 0 18px;}
-  .cprod b{color:var(--rosso);font-weight:600;}
-  .cdesc{font-size:15px;line-height:1.62;color:#555;margin:0 0 24px;}
-  .code{border:1.5px dashed var(--rosso);border-radius:12px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 18px;background:rgba(200,16,46,.04);}
-  .clab{font-size:9.5px;text-transform:uppercase;letter-spacing:.14em;color:#888;display:block;margin-bottom:2px;text-align:left;}
-  .cval{font-family:Georgia,serif;font-size:23px;font-weight:600;letter-spacing:.07em;color:var(--rosso);}
-  .cbtn{border:none;background:var(--rosso);color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s;}
-  .cbtn:hover{background:var(--rosso-sc);}
-  .cbtn.copied{background:#2e7d32;}
-  .cta{display:inline-block;width:100%;background:var(--rosso);color:#fff;text-decoration:none;padding:15px;border-radius:10px;font-weight:600;font-size:15px;transition:transform .2s,background .2s;}
-  .cta:hover{background:var(--rosso-sc);transform:translateY(-1px);}
-  .exp{display:inline-block;margin-top:14px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#999;}
+  .card{position:relative;max-width:460px;width:100%;max-height:92vh;overflow-y:auto;border-radius:22px;padding:40px 34px 34px;text-align:center;
+      background:
+        radial-gradient(120% 70% at 50% 0%, #3a1121 0%, #250a14 60%),
+        var(--ink-2);
+      border:1px solid var(--oro);
+      box-shadow:0 50px 110px -30px rgba(0,0,0,.85), inset 0 1px 0 rgba(255,255,255,.08);
+      transform:scale(.92) translateY(10px);opacity:0;transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .4s;}
+  .card::before{content:"";position:absolute;inset:9px;border:1px solid rgba(217,179,106,.3);border-radius:15px;pointer-events:none;}
+  .modal.open .card{transform:scale(1) translateY(0);opacity:1;}
+  .card-flake{width:36px;height:36px;margin:0 auto 16px;color:var(--oro);}
+  .close{position:absolute;top:16px;right:18px;background:none;border:none;font-size:26px;cursor:pointer;color:var(--panna-2);opacity:.6;z-index:4;}
+  .close:hover{opacity:1;color:var(--oro);}
+  .card-img{width:100%;border-radius:14px;margin:0 0 20px;border:1px solid var(--linea);}
+  .cday{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--oro);font-weight:600;margin:0 0 12px;}
+  .ctitle{font-family:var(--serif);font-size:clamp(25px,4.4vw,34px);margin:0 0 12px;line-height:1.12;color:var(--panna);font-weight:500;}
+  .cprod{font-size:14px;color:var(--panna-2);margin:0 0 20px;font-weight:300;}
+  .cprod b{color:var(--oro-2);font-weight:600;}
+  .cdesc{font-size:15px;line-height:1.66;color:var(--panna-2);margin:0 0 26px;font-weight:300;}
+  .code{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 18px;padding:15px 17px;border-radius:13px;
+      border:1px dashed var(--oro);background:rgba(217,179,106,.08);}
+  .clab{display:block;text-align:left;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--panna-2);margin-bottom:3px;opacity:.75;}
+  .cval{font-family:var(--serif);font-size:24px;font-weight:600;letter-spacing:.08em;color:var(--oro-2);}
+  .cbtn{border:none;background:var(--oro);color:#2a0b14;padding:11px 20px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;
+      font-family:var(--sans);white-space:nowrap;transition:background .2s,transform .15s;}
+  .cbtn:hover{background:var(--oro-2);transform:translateY(-1px);}
+  .cbtn.copied{background:#3f9d5f;color:#fff;}
+  .cta{display:inline-block;width:100%;padding:16px;border-radius:12px;font-weight:600;font-size:15px;text-decoration:none;font-family:var(--sans);
+      background:linear-gradient(100deg,var(--rosso),#a60d26);color:#fff;transition:transform .2s,box-shadow .2s;box-shadow:0 10px 26px -12px rgba(200,16,46,.8);}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 16px 34px -12px rgba(200,16,46,.9);}
+  .exp{display:inline-block;margin-top:16px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);opacity:.7;}
 
-  /* L'attributo HTML [hidden] deve sempre vincere sui display locali */
   [hidden]{display:none !important;}
 
-  .devbar{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:var(--nero);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;font-size:13px;}
-  .devbar input{width:60px;padding:5px 8px;border-radius:6px;border:none;font-size:14px;text-align:center;}
-  .devbar button{background:var(--rosso);color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:600;}
-  .devbar span{opacity:.6;}
+  /* devbar */
+  .devbar{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(10,3,6,.94);border-top:1px solid var(--linea);
+      color:var(--panna);padding:10px 16px;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;font-size:13px;backdrop-filter:blur(6px);}
+  .devbar input{width:62px;padding:6px 8px;border-radius:7px;border:1px solid var(--linea);background:#1c0810;color:var(--panna);font-size:14px;text-align:center;}
+  .devbar button{background:var(--oro);color:#2a0b14;border:none;padding:7px 16px;border-radius:7px;cursor:pointer;font-weight:700;}
+  .devbar span{opacity:.55;}
 </style>
 </head>
 <body>
 
-<!-- Finto contesto nav della pagina reale (solo per l'anteprima) -->
-<div class="ctx-topbar">Consegna entro 2/3 giorni &nbsp;·&nbsp; Un brand del gruppo Naïma</div>
+<!-- Finto contesto nav (solo anteprima) -->
+<div class="ctx-topbar">Spedizione gratuita sopra 49,90&euro; &nbsp;&middot;&nbsp; Un brand del gruppo Na&iuml;ma</div>
 <div class="ctx-nav">
   <div class="ctx-logo">Ditano<small>La profumeria della bellezza dal 1959</small></div>
-  <span class="ctx-promo">Promo</span>
-  <span style="font-size:13px;color:#555;">Novità · Calendari dell'Avvento · Profumi · Make-Up · Trattamenti</span>
+  <span class="ctx-links">Novit&agrave; &middot; Calendari dell'Avvento &middot; Profumi &middot; Make-Up &middot; Trattamenti</span>
 </div>
 
-<!-- ===== LA SEZIONE CALENDARIO (quella da integrare nel tema) ===== -->
-<!-- Fascia rossa, come header pagina Avvento -->
-<div class="avv-banner">
-  <h1 class="avv-banner-title">Il Calendario dell'Avvento Ditano</h1>
-  <p class="avv-banner-sub">Ogni giorno una nuova sorpresa beauty</p>
-</div>
-<!-- Intro su bianco -->
-<div class="avv-intro">
-  <h2 class="avv-intro-title">Dietro ogni finestrella, un'offerta che ti aspetta</h2>
-  <p class="avv-intro-sub">Scopri il calendario dell'avvento 2026 e immergiti in un mondo magico: ogni giorno fino a Natale si apre una nuova offerta, da scoprire a mezzanotte.</p>
-</div>
-<!-- Board finestrelle su fondo chiaro -->
-<div class="avv">
-  <div class="hero" id="hero" hidden></div>
-  <div class="grid" id="grid"></div>
+<!-- ===== SCENA: header editoriale + board (fondo scuro premium) ===== -->
+<div class="scene">
+  <div class="snow" id="snow" aria-hidden="true"></div>
+
+  <header class="head">
+    <p class="eyebrow">Avvento 2026</p>
+    <h1 class="h1">Il Calendario dell'Avvento <em>Ditano</em></h1>
+    <p class="lede">Ventiquattro finestrelle, ventiquattro sorprese di bellezza. Ogni giorno fino a Natale se ne apre una nuova, da scoprire allo scoccare della mezzanotte.</p>
+    <div class="rule"></div>
+  </header>
+
+  <div class="board">
+    <div class="hero" id="hero" hidden></div>
+    <div class="grid" id="grid"></div>
+  </div>
 </div>
 
-<div class="modal" id="modal" role="dialog" aria-modal="true">
+<!-- modale -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="card">
     <button class="close" aria-label="Chiudi">&times;</button>
-    <span class="card-flake"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1M12 5l-2 2M12 5l2 2M12 19l-2-2M12 19l2-2M5 12l2-2M5 12l2 2M19 12l-2-2M19 12l-2 2"/></svg></span>
+    <span class="card-flake"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1M12 5l-2 2M12 5l2 2M12 19l-2-2M12 19l2-2M5 12l2-2M5 12l2 2M19 12l-2-2M19 12l-2 2"/></svg></span>
     <p class="cday"></p>
-    <img class="card-img" alt="" hidden style="width:100%;border-radius:12px;margin:0 0 18px;">
-    <h3 class="ctitle"></h3>
+    <img class="card-img" alt="" hidden>
+    <h3 class="ctitle" id="mTitle"></h3>
     <p class="cprod" hidden></p>
     <p class="cdesc"></p>
     <div class="code" hidden>
@@ -156,45 +230,47 @@
       <button class="cbtn" type="button">Copia</button>
     </div>
     <a class="cta" href="#"></a>
-    <span class="exp" hidden>Offerta scaduta</span>
+    <span class="exp" hidden>Offerta non pi&ugrave; attiva</span>
   </div>
 </div>
 
 <div class="devbar">
-  <label>Simula giorno:</label>
+  <label for="dayInput">Simula giorno:</label>
   <input id="dayInput" type="number" min="1" max="24" value="7">
   <button id="dayGo">Vai</button>
-  <span>(solo anteprima - in produzione la data e automatica, mezzanotte Italia)</span>
+  <span>(solo anteprima: in produzione la data &egrave; automatica, mezzanotte Italia)</span>
 </div>
 
 <script>
-var FLAKE='<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1M12 5l-2 2M12 5l2 2M12 19l-2-2M12 19l2-2M5 12l2-2M5 12l2 2M19 12l-2-2M19 12l-2 2"/></svg>';
-// placeholder immagine (SVG data-uri) nei toni brand
-function ph(label,bg){return "data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><rect width="300" height="300" fill="'+bg+'"/><text x="50%" y="50%" font-family="Georgia" font-size="22" fill="#fff" text-anchor="middle" dominant-baseline="middle">'+label+'</text></svg>');}
+var FLAKE='<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1M12 5l-2 2M12 5l2 2M12 19l-2-2M12 19l2-2M5 12l2-2M5 12l2 2M19 12l-2-2M19 12l-2 2"/></svg>';
+var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
 
-// Prodotti reali presi da ditano.com (immagine CDN Shopify, prezzo, URL prodotto) - solo per la demo
+// Prodotti reali ditano.com (immagine CDN Shopify, prezzo, URL) - solo demo
 var OFFERS={
-  1:{t:"Benvenuto Avvento",d:"10% su tutto il catalogo per iniziare dicembre con il piede giusto.",c:"DITANO10",cta:"Scopri il catalogo",u:"https://ditano.com/collections/all"},
+  1:{t:"Benvenuto Avvento",d:"Dieci per cento su tutto il catalogo, per iniziare dicembre nel modo giusto.",c:"DITANO10",cta:"Scopri il catalogo",u:"https://ditano.com/collections/all"},
   2:{t:"L'icona DIOR",d:"Sauvage Eau de Parfum: note esperidate e vanigliate. L'icona maschile, in offerta oggi.",c:"SAUVAGE2",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/15597389-119a-401a-a680-a541e28f6e22.jpg",pt:"Sauvage Eau de Parfum - DIOR",pp:"65,78 €",u:"https://ditano.com/products/sauvage-eau-de-parfum"},
   3:{t:"Il fiore solare",d:"J'adore Eau de Parfum: note floreali e solari. Il profumo femminile per eccellenza.",c:"JADORE3",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/121dff12-46fc-476c-8a60-0b35a7f379ae.jpg",pt:"J'adore Eau de Parfum - DIOR",pp:"63,54 €",u:"https://ditano.com/products/j-adore-eau-de-parfum-new"},
-  5:{t:"Il muschio bianco",d:"Narciso Rodriguez For Her Pure Musc: sensualita pura. Oggi al 39% di sconto.",c:"NARCISO5",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/d48f1ba2-01ec-4c04-94b3-24e3a9343eb1.jpg",pt:"For Her Pure Musc - Narciso Rodriguez",pp:"48,00 €",u:"https://ditano.com/products/narciso-rodriguez-for-her-pure-musc"},
-  7:{t:"Freschezza mediterranea",d:"Acqua di Gioia di Armani: la fragranza dell'acqua. Solo oggi al 34%.",c:"GIOIA7",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/74bff379-38b5-4cda-ad71-c52e39312acb.jpg",pt:"Acqua di Gioia - Armani",pp:"51,99 €",u:"https://ditano.com/products/acqua-di-gioia"},
-  9:{t:"Make-up d'autore",d:"Professionale Matita Occhi Collistar, bestseller make-up. Lo sguardo che definisce il tuo look.",c:"COLLISTAR9",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/1720d00a-0d3f-4641-9ec1-3dc3ab75192f.jpg",pt:"Professionale Matita Occhi - Collistar",pp:"14,40 €",u:"https://ditano.com/products/professionale-matita-occhi"},
+  5:{t:"Il muschio bianco",d:"Narciso Rodriguez For Her Pure Musc: sensualita pura, avvolgente e moderna.",c:"NARCISO5",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/d48f1ba2-01ec-4c04-94b3-24e3a9343eb1.jpg",pt:"For Her Pure Musc - Narciso Rodriguez",pp:"48,00 €",u:"https://ditano.com/products/narciso-rodriguez-for-her-pure-musc"},
+  7:{t:"Freschezza mediterranea",d:"Acqua di Gioia di Armani: la fragranza dell'acqua, luminosa e fresca.",c:"GIOIA7",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/74bff379-38b5-4cda-ad71-c52e39312acb.jpg",pt:"Acqua di Gioia - Armani",pp:"51,99 €",u:"https://ditano.com/products/acqua-di-gioia"},
+  9:{t:"Make-up d'autore",d:"Professionale Matita Occhi Collistar, bestseller make-up. Lo sguardo che definisce il look.",c:"COLLISTAR9",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/1720d00a-0d3f-4641-9ec1-3dc3ab75192f.jpg",pt:"Professionale Matita Occhi - Collistar",pp:"14,40 €",u:"https://ditano.com/products/professionale-matita-occhi"},
   12:{t:"Sorpresa di meta Avvento",d:"Versace Eros Eau de Parfum: carisma e seduzione. L'offerta a sorpresa di oggi.",c:"EROS12",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/9c12dd67-d011-4614-b87a-f88d524c6839.jpg",pt:"Eros Eau de Parfum - Versace",pp:"63,70 €",u:"https://ditano.com/products/versace-eros-eau-de-parfum"},
-  16:{t:"Pelle che rinasce",d:"Advanced Night Repair di Estee Lauder: il siero notturno iconico, al 30%.",c:"ANR16",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/34b15976-ce52-4e41-a72c-42fa3603f90a.jpg",pt:"Advanced Night Repair - Estee Lauder",pp:"101,00 €",u:"https://ditano.com/products/advanced-night-repair-synchronized-multi-recovery-complex-siero"},
-  20:{t:"Fragranza futura",d:"Alien Eau de Parfum ricaricabile di Mugler: ipnotica e avvolgente, al 30%.",c:"ALIEN20",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/c3cbee1b-262b-4ec9-97d4-817381f3a539.jpg",pt:"Alien EDP Ricaricabile - Mugler",pp:"83,90 €",u:"https://ditano.com/products/alien-edp-ricaricabile"},
+  16:{t:"Pelle che rinasce",d:"Advanced Night Repair di Estee Lauder: il siero notturno iconico per una pelle piu giovane.",c:"ANR16",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/34b15976-ce52-4e41-a72c-42fa3603f90a.jpg",pt:"Advanced Night Repair - Estee Lauder",pp:"101,00 €",u:"https://ditano.com/products/advanced-night-repair-synchronized-multi-recovery-complex-siero"},
+  20:{t:"Fragranza futura",d:"Alien Eau de Parfum ricaricabile di Mugler: ipnotica, ambrata e avvolgente.",c:"ALIEN20",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/c3cbee1b-262b-4ec9-97d4-817381f3a539.jpg",pt:"Alien EDP Ricaricabile - Mugler",pp:"83,90 €",u:"https://ditano.com/products/alien-edp-ricaricabile"},
   24:{t:"Vigilia Ditano",d:"Il regalo piu grande per chiudere l'Avvento: Sauvage, l'icona per lui, sotto l'albero.",c:"VIGILIA",cta:"Il regalo di Natale",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/15597389-119a-401a-a680-a541e28f6e22.jpg",pt:"Sauvage Eau de Parfum - DIOR",pp:"65,78 €",u:"https://ditano.com/products/sauvage-eau-de-parfum"}
 };
-function offer(i){ return OFFERS[i]||{t:"Offerta del giorno",d:"Una nuova sorpresa beauty ti aspetta.",c:"REGALO"+i,cta:"Scopri l'offerta",u:"https://ditano.com/collections/all"}; }
+function offer(i){ return OFFERS[i]||{t:"Offerta del giorno",d:"Una nuova sorpresa di bellezza ti aspetta.",c:"REGALO"+i,cta:"Scopri l'offerta",u:"https://ditano.com/collections/all"}; }
 
 var modal=document.getElementById('modal'), card=modal.querySelector('.card'), grid=document.getElementById('grid'), hero=document.getElementById('hero');
+var lastFocus=null;
+
 function render(cur){
   grid.innerHTML='';
   var activeIdx=null;
   for(var i=1;i<=24;i++){
     var o=offer(i), state=i>cur?'locked':(i===cur?'active':'past');
     if(state==='active') activeIdx=i;
-    var door=document.createElement('div'); door.className='door '+state+((o.img&&state!=='locked')?' has-visual':'');
+    var door=document.createElement('div');
+    door.className='door '+state+((o.img&&state!=='locked')?' has-visual':'');
     var frontInner = (o.img && state!=='locked')
       ? '<img class="door-img" src="'+o.img+'" alt=""><span class="num overlay">'+i+'</span>'
       : '<span class="flake">'+FLAKE+'</span><span class="num">'+i+'</span>';
@@ -202,13 +278,12 @@ function render(cur){
       '<div class="flip">'+
         '<div class="face front">'+frontInner+
           (state==='active'?'<span class="seal">'+FLAKE+'</span><span class="today">Oggi</span>':'')+'</div>'+
-        '<div class="face back"><span class="pnum">'+i+'</span><span class="ptxt">'+o.t+'</span><span class="ptag">scaduta</span></div>'+
+        '<div class="face back"><span class="pcheck">'+CHECK+'</span><span class="pnum">'+i+'</span><span class="ptxt">'+o.t+'</span><span class="ptag">aperta</span></div>'+
       '</div>';
-    if(state==='active'){ (function(i){door.onclick=function(){open(i,false);};})(i); }
-    else if(state==='past'){ (function(i){door.onclick=function(){open(i,true);};})(i); }
+    if(state==='active'){ door.setAttribute('tabindex','0'); door.setAttribute('role','button'); (function(i){door.onclick=function(){open(i,false);};door.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i,false);}};})(i); }
+    else if(state==='past'){ door.setAttribute('tabindex','0'); door.setAttribute('role','button'); (function(i){door.onclick=function(){open(i,true);};door.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i,true);}};})(i); }
     grid.appendChild(door);
   }
-  // HERO oggi (mobile)
   if(activeIdx){
     var ho=offer(activeIdx);
     var media=ho.img?'<img src="'+ho.img+'" alt="">':'<span class="hero-flake">'+FLAKE+'</span>';
@@ -219,11 +294,12 @@ function render(cur){
     hero.hidden=false;
     (function(idx){hero.onclick=function(){open(idx,false);};})(activeIdx);
   } else {
-    hero.innerHTML='<div style="padding:22px;text-align:center;"><p style="font-family:Georgia,serif;font-size:20px;margin:0 0 6px;">Il calendario ti aspetta</p><p style="font-size:13px;color:#666;margin:0;">Dal 1 dicembre, ogni giorno una nuova finestrella da aprire.</p></div>';
+    hero.innerHTML='<div style="padding:26px;text-align:center;"><p style="font-family:var(--serif);font-size:21px;margin:0 0 7px;color:var(--panna);">Il calendario ti aspetta</p><p style="font-size:13px;color:var(--panna-2);margin:0;">Dal 1 dicembre, ogni giorno una nuova finestrella da aprire.</p></div>';
     hero.hidden=false;
   }
 }
 function open(i,expired){
+  lastFocus=document.activeElement;
   var o=offer(i);
   card.querySelector('.cday').textContent='Giorno '+i+' dicembre';
   card.querySelector('.ctitle').textContent=o.t;
@@ -238,8 +314,9 @@ function open(i,expired){
   if(!expired){ cta.textContent=o.cta; cta.href=o.u||'#'; cta.target='_blank'; cta.rel='noopener'; cta.hidden=false; } else { cta.hidden=true; }
   card.querySelector('.exp').hidden=!expired;
   modal.classList.add('open');
+  card.querySelector('.close').focus();
 }
-function close(){ modal.classList.remove('open'); }
+function close(){ modal.classList.remove('open'); if(lastFocus&&lastFocus.focus)lastFocus.focus(); }
 modal.querySelector('.close').addEventListener('click',close);
 modal.addEventListener('click',function(e){ if(e.target===modal) close(); });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
@@ -249,6 +326,26 @@ copyBtn.addEventListener('click',function(){
   navigator.clipboard.writeText(v).then(function(){ copyBtn.textContent='Copiato'; copyBtn.classList.add('copied'); setTimeout(function(){copyBtn.textContent='Copia';copyBtn.classList.remove('copied');},1600); });
 });
 document.getElementById('dayGo').addEventListener('click',function(){ var v=parseInt(document.getElementById('dayInput').value,10)||1; render(Math.max(1,Math.min(24,v))); });
+document.getElementById('dayInput').addEventListener('keydown',function(e){ if(e.key==='Enter') document.getElementById('dayGo').click(); });
+
+// neve generata
+(function(){
+  var snow=document.getElementById('snow');
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var N=26;
+  for(var k=0;k<N;k++){
+    var s=document.createElement('i');
+    var size=(Math.random()*8+5).toFixed(1);
+    s.textContent='\u2744';
+    s.style.left=(Math.random()*100).toFixed(2)+'%';
+    s.style.fontSize=size+'px';
+    s.style.animationDuration=(Math.random()*9+8).toFixed(1)+'s';
+    s.style.animationDelay=(-Math.random()*12).toFixed(1)+'s';
+    s.style.opacity=(Math.random()*0.4+0.25).toFixed(2);
+    snow.appendChild(s);
+  }
+})();
+
 render(7);
 </script>
 </body>
