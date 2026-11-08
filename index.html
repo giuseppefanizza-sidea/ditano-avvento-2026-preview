@@ -102,8 +102,9 @@
   .door.active .flake{opacity:.16;}
   .door.active:hover .flip{transform:translateY(-6px) rotateX(7deg);}
   .seal{position:absolute;top:9px;right:11px;width:16px;height:16px;z-index:3;color:var(--oro);opacity:.95;}
-  .today{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--sans);
-      font-size:8.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--oro-2);font-weight:600;}
+  .today{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:3;font-family:var(--sans);
+      font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--oro-2);font-weight:600;white-space:nowrap;
+      background:rgba(8,35,28,.55);padding:2px 7px;border-radius:20px;}
   @keyframes breathe{0%,100%{box-shadow:0 0 0 1px rgba(217,179,106,.7),0 14px 34px -16px rgba(200,16,46,.45),inset 0 0 20px rgba(217,179,106,.10);}
     50%{box-shadow:0 0 0 1px var(--oro),0 22px 46px -12px rgba(200,16,46,.7),inset 0 0 30px rgba(217,179,106,.2);}}
 
@@ -236,7 +237,7 @@
 
 <div class="devbar">
   <label for="dayInput">Simula giorno:</label>
-  <input id="dayInput" type="number" min="1" max="24" value="7">
+  <input id="dayInput" type="number" min="1" max="24" value="4">
   <button id="dayGo">Vai</button>
   <span>(solo anteprima: in produzione la data &egrave; automatica, mezzanotte Italia)</span>
 </div>
@@ -247,14 +248,14 @@ var CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-wid
 
 // Prodotti reali ditano.com (immagine CDN Shopify, prezzo, URL) - solo demo
 var OFFERS={
-  1:{t:"Benvenuto Avvento",d:"Dieci per cento su tutto il catalogo, per iniziare dicembre nel modo giusto.",c:"DITANO10",cta:"Scopri il catalogo",u:"https://ditano.com/collections/all"},
+  1:{t:"Benvenuto Avvento",d:"Dieci per cento su tutto il catalogo, per iniziare dicembre nel modo giusto.",c:"DITANO10",cta:"Scopri il catalogo",u:"https://ditano.com/collections/all",end:6},
   2:{t:"L'icona DIOR",d:"Sauvage Eau de Parfum: note esperidate e vanigliate. L'icona maschile, in offerta oggi.",c:"SAUVAGE2",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/15597389-119a-401a-a680-a541e28f6e22.jpg",pt:"Sauvage Eau de Parfum - DIOR",pp:"65,78 €",u:"https://ditano.com/products/sauvage-eau-de-parfum"},
   3:{t:"Il fiore solare",d:"J'adore Eau de Parfum: note floreali e solari. Il profumo femminile per eccellenza.",c:"JADORE3",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/121dff12-46fc-476c-8a60-0b35a7f379ae.jpg",pt:"J'adore Eau de Parfum - DIOR",pp:"63,54 €",u:"https://ditano.com/products/j-adore-eau-de-parfum-new"},
   5:{t:"Il muschio bianco",d:"Narciso Rodriguez For Her Pure Musc: sensualita pura, avvolgente e moderna.",c:"NARCISO5",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/d48f1ba2-01ec-4c04-94b3-24e3a9343eb1.jpg",pt:"For Her Pure Musc - Narciso Rodriguez",pp:"48,00 €",u:"https://ditano.com/products/narciso-rodriguez-for-her-pure-musc"},
   7:{t:"Freschezza mediterranea",d:"Acqua di Gioia di Armani: la fragranza dell'acqua, luminosa e fresca.",c:"GIOIA7",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/74bff379-38b5-4cda-ad71-c52e39312acb.jpg",pt:"Acqua di Gioia - Armani",pp:"51,99 €",u:"https://ditano.com/products/acqua-di-gioia"},
   9:{t:"Make-up d'autore",d:"Professionale Matita Occhi Collistar, bestseller make-up. Lo sguardo che definisce il look.",c:"COLLISTAR9",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/1720d00a-0d3f-4641-9ec1-3dc3ab75192f.jpg",pt:"Professionale Matita Occhi - Collistar",pp:"14,40 €",u:"https://ditano.com/products/professionale-matita-occhi"},
   12:{t:"Sorpresa di meta Avvento",d:"Versace Eros Eau de Parfum: carisma e seduzione. L'offerta a sorpresa di oggi.",c:"EROS12",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/9c12dd67-d011-4614-b87a-f88d524c6839.jpg",pt:"Eros Eau de Parfum - Versace",pp:"63,70 €",u:"https://ditano.com/products/versace-eros-eau-de-parfum"},
-  16:{t:"Pelle che rinasce",d:"Advanced Night Repair di Estee Lauder: il siero notturno iconico per una pelle piu giovane.",c:"ANR16",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/34b15976-ce52-4e41-a72c-42fa3603f90a.jpg",pt:"Advanced Night Repair - Estee Lauder",pp:"101,00 €",u:"https://ditano.com/products/advanced-night-repair-synchronized-multi-recovery-complex-siero"},
+  16:{t:"Pelle che rinasce",d:"Advanced Night Repair di Estee Lauder: il siero notturno iconico per una pelle piu giovane.",c:"ANR16",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/34b15976-ce52-4e41-a72c-42fa3603f90a.jpg",pt:"Advanced Night Repair - Estee Lauder",pp:"101,00 €",u:"https://ditano.com/products/advanced-night-repair-synchronized-multi-recovery-complex-siero",end:24},
   20:{t:"Fragranza futura",d:"Alien Eau de Parfum ricaricabile di Mugler: ipnotica, ambrata e avvolgente.",c:"ALIEN20",cta:"Vai al prodotto",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/c3cbee1b-262b-4ec9-97d4-817381f3a539.jpg",pt:"Alien EDP Ricaricabile - Mugler",pp:"83,90 €",u:"https://ditano.com/products/alien-edp-ricaricabile"},
   24:{t:"Vigilia Ditano",d:"Il regalo piu grande per chiudere l'Avvento: Sauvage, l'icona per lui, sotto l'albero.",c:"VIGILIA",cta:"Il regalo di Natale",img:"https://cdn.shopify.com/s/files/1/0645/5096/1316/files/15597389-119a-401a-a680-a541e28f6e22.jpg",pt:"Sauvage Eau de Parfum - DIOR",pp:"65,78 €",u:"https://ditano.com/products/sauvage-eau-de-parfum"}
 };
@@ -263,22 +264,36 @@ function offer(i){ return OFFERS[i]||{t:"Offerta del giorno",d:"Una nuova sorpre
 var modal=document.getElementById('modal'), card=modal.querySelector('.card'), grid=document.getElementById('grid'), hero=document.getElementById('hero');
 var lastFocus=null;
 
+// stato di una finestrella considerando la durata (apertura i -> fine o.end)
+function dayState(i,cur){
+  var o=offer(i);
+  var fine=(o.end&&o.end>=i)?o.end:i;      // se manca end, dura solo il suo giorno
+  if(cur<i) return 'locked';               // non ancora aperta
+  if(cur<=fine) return 'active';           // aperta e ancora valida (anche piu giorni)
+  return 'past';                           // durata finita
+}
+function endLabel(i){
+  var o=offer(i), fine=(o.end&&o.end>=i)?o.end:i;
+  return fine>i ? ('Attiva fino al '+fine+' dic') : 'Solo oggi';
+}
+
 function render(cur){
   grid.innerHTML='';
   var activeIdx=null;
   for(var i=1;i<=24;i++){
-    var o=offer(i), state=i>cur?'locked':(i===cur?'active':'past');
-    if(state==='active') activeIdx=i;
+    var o=offer(i), state=dayState(i,cur);
+    if(state==='active') activeIdx=i;      // tiene l'ultima attiva (apertura piu recente) per l'hero
     var door=document.createElement('div');
     door.className='door '+state+((o.img&&state!=='locked')?' has-visual':'');
+    var multi=(o.end&&o.end>i);
     var frontInner = (o.img && state!=='locked')
       ? '<img class="door-img" src="'+o.img+'" alt=""><span class="num overlay">'+i+'</span>'
       : '<span class="flake">'+FLAKE+'</span><span class="num">'+i+'</span>';
+    var activeTag = state==='active' ? '<span class="seal">'+FLAKE+'</span><span class="today">'+(multi?('fino al '+o.end):'Oggi')+'</span>' : '';
     door.innerHTML=
       '<div class="flip">'+
-        '<div class="face front">'+frontInner+
-          (state==='active'?'<span class="seal">'+FLAKE+'</span><span class="today">Oggi</span>':'')+'</div>'+
-        '<div class="face back"><span class="pcheck">'+CHECK+'</span><span class="pnum">'+i+'</span><span class="ptxt">'+o.t+'</span><span class="ptag">aperta</span></div>'+
+        '<div class="face front">'+frontInner+activeTag+'</div>'+
+        '<div class="face back"><span class="pcheck">'+CHECK+'</span><span class="pnum">'+i+'</span><span class="ptxt">'+o.t+'</span><span class="ptag">conclusa</span></div>'+
       '</div>';
     if(state==='active'){ door.setAttribute('tabindex','0'); door.setAttribute('role','button'); (function(i){door.onclick=function(){open(i,false);};door.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i,false);}};})(i); }
     else if(state==='past'){ door.setAttribute('tabindex','0'); door.setAttribute('role','button'); (function(i){door.onclick=function(){open(i,true);};door.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(i,true);}};})(i); }
@@ -288,7 +303,7 @@ function render(cur){
     var ho=offer(activeIdx);
     var media=ho.img?'<img src="'+ho.img+'" alt="">':'<span class="hero-flake">'+FLAKE+'</span>';
     hero.innerHTML='<div class="hero-media"><span class="hero-badge">Oggi</span>'+media+'</div>'+
-      '<div class="hero-body"><p class="hero-day">Giorno '+activeIdx+' dicembre</p>'+
+      '<div class="hero-body"><p class="hero-day">'+((ho.end&&ho.end>activeIdx)?('Dal '+activeIdx+' al '+ho.end+' dicembre'):('Giorno '+activeIdx+' dicembre'))+'</p>'+
       '<h3 class="hero-title">'+ho.t+'</h3>'+(ho.d?'<p class="hero-desc">'+ho.d+'</p>':'')+
       '<button class="hero-open" type="button">Scopri l\'offerta di oggi</button></div>';
     hero.hidden=false;
@@ -301,7 +316,8 @@ function render(cur){
 function open(i,expired){
   lastFocus=document.activeElement;
   var o=offer(i);
-  card.querySelector('.cday').textContent='Giorno '+i+' dicembre';
+  var fine=(o.end&&o.end>=i)?o.end:i;
+  card.querySelector('.cday').textContent = fine>i ? ('Dal '+i+' al '+fine+' dicembre') : ('Giorno '+i+' dicembre');
   card.querySelector('.ctitle').textContent=o.t;
   var prodEl=card.querySelector('.cprod');
   if(o.pt){ prodEl.innerHTML=o.pt+(o.pp?' &middot; <b>'+o.pp+'</b>':''); prodEl.hidden=false; } else { prodEl.hidden=true; }
@@ -346,7 +362,7 @@ document.getElementById('dayInput').addEventListener('keydown',function(e){ if(e
   }
 })();
 
-render(7);
+render(4);
 </script>
 </body>
 </html>
